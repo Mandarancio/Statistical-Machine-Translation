@@ -31,4 +31,4 @@ C: lalok rarok nok izok hihok mok
 The translated sentence match the original translation.
 ## Exercise 2
 In this second exercise we were asked to implement the EM algorithm for a simple head or
-tails problem. You can find the code in em_coins.py.
+tails problem. You can find the code in em_coins.py. The config file is em.json.
