@@ -11,11 +11,13 @@ any back-pointer, you can find the code in translator.py.
 
 The results of the script are the following:
 
-1 A: iat lat pippat eneat hilat oloat at-yurp
-C: lalok brok anok enemok ghirok kantok ok-yurp
-2 A: totat nnat forat arrat mat bat
+ A: iat lat pippat eneat hilat oloat at-yurp\s\s
+ C: lalok brok anok enemok ghirok kantok ok-yurp
+
+A: totat nnat forat arrat mat bat\s\s
 C: wiwok rarok nok crrrok yorok ghirok
-3 A: wat dat quat cat uskrat at-drubel
+
+A: wat dat quat cat uskrat at-drubel\s\s
 C: lalok sprok izok stok ? ok-drubel
 
 Note that in sentence 3 there is a word never translated in the “Rosetta stone”.
@@ -23,7 +25,7 @@ The more difficult part of the exercise is the verification as the sense and the
 the two languages are unknown, the only verification I did was to pass a translated
 sentence to the “translator” and look at the resut:
 
-A: wat nnat forat arrat vat ga
+A: wat nnat forat arrat vat \s\s
 C: lalok rarok nok izok hihok mok
 
 The translated sentence match the original translation.

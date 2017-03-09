@@ -1,46 +1,13 @@
 import random as r
 import math
-
-def generate_dataset (N = 5, M = 10):
-    dataset = {
-                'coin':[],
-                'realization':[],
-                'N': N,
-                'M': M
-              }
-    coins_p =[0.8, 0.45]
-    coins_n =['A','B']
-
-    for i in range(0,N):
-        coin = 1 if r.random()>0.5 else 0
-        prob = coins_p[coin]
-        realization = []
-        for j in range(0,M):
-            event = 1 if r.random()<prob else 0
-            realization.append(event)
-
-        dataset['coin'].append(coins_n[coin])
-        dataset['realization'].append(tuple(realization))
-    return dataset
-
-
-dataset = {
-    'M':10,
-    'N':5,
-    'realization':[
-        (1,1,1,1,1,0,0,0,0,0),
-        (1,1,1,1,1,1,1,1,1,0),
-        (1,1,1,1,1,1,1,1,0,0),
-        (1,1,1,1,0,0,0,0,0,0),
-        (1,1,1,1,1,1,1,0,0,0)
-    ]
-}
+import sys
+import json
 
 
 class EM:
-    def __init__(self, init_tetas, epsilon =1e-10):
-        self.__tetas__=init_tetas
-        #self.__expectation__= {}
+    def __init__(self, init_tetas, epsilon=1e-10):
+        self.__tetas__ = init_tetas
+        # self.__expectation__= {}
         self.__epsilon__ = epsilon
 
     def tetas(self):
@@ -51,45 +18,45 @@ class EM:
         exp = {}
         # Number of classes
         N = 1/len(self.__tetas__)
-        probabilites ={}
+        probabilites = {}
         for x in self.__tetas__:
-            exp[x]={}
-            probabilites[x]=1
+            exp[x] = {}
+            probabilites[x] = 1
             for k in self.__tetas__[x]:
-                exp[x][k]=0
+                exp[x][k] = 0
 
             # Number of realizations
             M = len(x)
 
-        for r in data['realization']:
-            events ={}
+        for r in data:
+            events = {}
             for k in r:
                 if k in events:
-                    events[k]+=1
-                else :
-                    events[k]=1
+                    events[k] += 1
+                else:
+                    events[k] = 1
             denominator = 0
             for x in probabilites:
-                probabilites[x]=1
+                probabilites[x] = 1
                 for k in events:
-                    probabilites[x]*=(self.__tetas__[x][k]**events[k])
-                denominator+= probabilites[x]
+                    probabilites[x] *= (self.__tetas__[x][k]**events[k])
+                denominator += probabilites[x]
             for x in exp:
                 for k in events:
-                    exp[x][k]+=(probabilites[x]/denominator)*events[k]
+                    exp[x][k] += (probabilites[x]/denominator)*events[k]
         return exp
 
-    def __maximization(self,exp):
-        #new tetas
+    def __maximization(self, exp):
+        # new tetas
         tetas = {}
         for x in self.__tetas__:
             total = 0
-            tetas[x]={}
+            tetas[x] = {}
             for k in self.__tetas__[x]:
-                tetas[x][k]=exp[x][k]
+                tetas[x][k] = exp[x][k]
                 total += exp[x][k]
             for k in self.__tetas__[x]:
-                tetas[x][k]/=total
+                tetas[x][k] /= total
         return tetas
 
     def __diff(self, teta):
@@ -99,31 +66,31 @@ class EM:
                 diff += math.fabs(teta[x][k]-self.__tetas__[x][k])
         return diff
 
-    def optimize(self, data, MAX =1e9):
+    def optimize(self, data, MAX=1e9):
         converged = False
         counter = 0
-        while not converged and counter<MAX:
+        while not converged and counter < MAX:
             exp = self.__expectation(data)
             teta = self.__maximization(exp)
             diff = self.__diff(teta)
-            counter+=1
+            counter += 1
             self.__tetas__ = teta
-            if diff<=self.__epsilon__:
+            if diff <= self.__epsilon__:
                 converged = True
                 print('converged after '+str(counter)+' iterations')
         return self.__tetas__
 
-#dataset = generate_dataset()
-tetas = {
-    'A': {
-        1: 0.6,
-        0: 0.4
-    },
-    'B':{
-        1: 0.5,
-        0: 0.5
-    }
-}
 
-em = EM(tetas)
+if len(sys.argv) < 2:
+    print("Config file needed!\nEx: em.json")
+    sys.exit(0)
+
+conf = sys.argv[1]
+
+with open(conf) as data_file:
+    data = json.load(data_file)
+tetas = data['tetas']
+dataset = data['realizations']
+epsilon = data['epsilon']
+em = EM(tetas, epsilon)
 print(em.optimize(dataset))
