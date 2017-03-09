@@ -75,9 +75,10 @@ def translate_file(path, monograms, bigrams):
         print()
 
 
-source_path = "Arcturan1"
-target_path = "centauri1"
-sentences_path = "target"
+path = 'files/'
+source_path = path+"Arcturan1"
+target_path = path+"centauri1"
+sentences_path = path+"target"
 
 monograms, bigrams = generate_ttable(source_path, target_path)
 translate_file(sentences_path, monograms, bigrams)
