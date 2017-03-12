@@ -1,0 +1,41 @@
+{
+  "target_lang":"English",
+  "source_lang":"German",
+  "ts":{
+    "das":{
+      "the":0.7,
+      "that":0.15,
+      "which":0.075,
+      "who":0.05,
+      "this":0.025
+    },
+    "Haus":{
+      "house":0.8,
+      "building":0.16,
+      "home":0.02,
+      "household":0.015,
+      "shell": 0.005
+    },
+    "ist":{
+      "is":0.8,
+      "'s":0.16,
+      "exists":0.02,
+      "has":0.015,
+      "are":0.005
+    },
+    "klein":{
+      "small":0.4,
+      "little":0.4,
+      "short":0.1,
+      "minor":0.06,
+      "petty":0.04
+    }
+  },
+  "source":"das Haus ist klein",
+  "targets":[
+    "the house is small",
+    "the house is little",
+    "small house the is",
+    "the"
+  ]
+}

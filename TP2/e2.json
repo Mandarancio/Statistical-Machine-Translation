@@ -1,0 +1,23 @@
+{
+  "tetas":{
+    "blue":{
+      "maison" : 0.5,
+      "bleue": 0.5,
+      "la" : 0.0
+    },
+    "house":{
+      "maison" : 0.4,
+      "bleue": 0.3,
+      "la" : 0.3
+    },
+    "the":{
+      "maison" : 0.5,
+      "bleue": 0.0,
+      "la" : 0.5
+    }
+  },
+  "realizations":[
+    ["maison","bleue"],
+    ["la", "maison"]
+  ]
+}
