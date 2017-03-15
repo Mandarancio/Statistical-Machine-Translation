@@ -1,23 +1,31 @@
 {
-  "tetas":{
+  "ts":{
     "blue":{
-      "maison" : 0.5,
-      "bleue": 0.5,
-      "la" : 0.0
+      "maison" : 0.3,
+      "bleue": 0.3,
+      "la" : 0.3
     },
     "house":{
-      "maison" : 0.4,
+      "maison" : 0.3,
       "bleue": 0.3,
       "la" : 0.3
     },
     "the":{
-      "maison" : 0.5,
-      "bleue": 0.0,
-      "la" : 0.5
+      "maison" : 0.3,
+      "bleue": 0.3,
+      "la" : 0.3
     }
   },
-  "realizations":[
-    ["maison","bleue"],
-    ["la", "maison"]
-  ]
+  "sentences":[
+    {
+      "source" : "blue house",
+      "target" : "maison bleue"
+    },
+    {
+      "source" : "the house",
+      "target" : "la maison"
+    }
+  ],
+  "debug" : true,
+  "maxiteration" : 3
 }

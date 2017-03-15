@@ -1,6 +1,10 @@
 import itertools
 
 
+def split(sentence):
+    return sentence.split(' ')
+
+
 def alligments(f, e):
     '''
     Generate all possible alligments
@@ -13,6 +17,9 @@ def alligments(f, e):
 
 class IBM1:
     def __init__(self, ts):
+        self.__ts__ = ts
+
+    def set_ts(self, ts):
         self.__ts__ = ts
 
     '''
@@ -66,3 +73,11 @@ class IBM1:
         for a in als:
             total += self.p(f, a, e)
         return total
+
+    def all_allignement(self, f, e):
+        als = alligments(f, e)
+        pbs = []
+        for i in range(0, len(als)):
+            pt = self.p(f, als[i], e)
+            pbs.append(pt)
+        return als, pbs
