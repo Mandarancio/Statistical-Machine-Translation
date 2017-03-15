@@ -1,31 +1,31 @@
 {
   "ts":{
-    "blue":{
-      "maison" : 0.3,
-      "bleue": 0.3,
-      "la" : 0.3
+    "bleue":{
+      "house" : 0.333,
+      "blue": 0.333,
+      "the" : 0.333
     },
-    "house":{
-      "maison" : 0.3,
-      "bleue": 0.3,
-      "la" : 0.3
+    "maison":{
+      "house" : 0.3333,
+      "blue": 0.3333,
+      "the" : 0.3333
     },
-    "the":{
-      "maison" : 0.3,
-      "bleue": 0.3,
-      "la" : 0.3
+    "la":{
+      "house" : 0.333,
+      "blue":0.333,
+      "the" : 0.333
     }
   },
   "sentences":[
     {
-      "source" : "blue house",
-      "target" : "maison bleue"
+      "target" : "blue house",
+      "source" : "maison bleue"
     },
     {
-      "source" : "the house",
-      "target" : "la maison"
+      "target" : "the house",
+      "source" : "la maison"
     }
   ],
   "debug" : true,
-  "maxiteration" : 3
+  "maxiteration" : 300
 }
