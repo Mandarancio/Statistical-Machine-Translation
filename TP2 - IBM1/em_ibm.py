@@ -10,6 +10,12 @@ def print_teta(teta):
 
 
 class EM_ibm1:
+    """
+    Simple EM algorithm for the IBM1 model
+    :param ts: initial translation probabilites table (used as teta)
+    :param epsilon: convergence epsilon value
+    :param debug: debug flag
+    """
     def __init__(self, ts, epsilon=1e-5, debug=False):
         self.__tetas__ = ts
         # self.__expectation__= {}
@@ -18,9 +24,15 @@ class EM_ibm1:
         self.__Debug__ = debug
 
     def tetas(self):
+        """
+        :return: the tetas of the EM, equivalent to the translation table
+        """
         return self.__tetas__
 
     def __expectation(self, data):
+        """
+        expectation step
+        """
         # Computed expectation
         exp = {}
         # Number of classes
@@ -38,7 +50,7 @@ class EM_ibm1:
         for c in data:
             f = ibm1.split(c['source'])
             e = ibm1.split(c['target'])
-            als, probs = self.__ibm1__.all_allignement(f, e)
+            als, probs = self.__ibm1__.all_alignments(f, e)
             if self.__Debug__:
                 print('\n'+' '.join(e))
             for j in range(0, len(als)):
@@ -72,6 +84,9 @@ class EM_ibm1:
         return exp
 
     def __maximization(self, exp):
+        """
+        maximization step
+        """
         # new tetas
         tetas = {}
         for x in self.__tetas__:
@@ -86,6 +101,9 @@ class EM_ibm1:
         return tetas
 
     def __diff(self, teta):
+        """
+        difference between new tetas and old tetas
+        """
         diff = 0
         for x in teta:
             for k in teta[x]:
@@ -93,6 +111,12 @@ class EM_ibm1:
         return diff
 
     def optimize(self, data, MAX=1e9):
+        """
+        unsuperivised optimize function
+        :param data: training dataset
+        :param MAX: maximum number of iterations
+        :return: optimized tetas (equivalent to the translation probabilites)
+        """
         converged = False
         counter = 0
         while not converged and counter < MAX:

@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module ibm1</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>ibm1</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/home/martino/git/Statistical-Machine-Translation/TP2%20-%20IBM1/ibm1.py">/home/martino/git/Statistical-Machine-Translation/TP2 - IBM1/ibm1.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="itertools.html">itertools</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="ibm1.html#IBM1">IBM1</a>
+</font></dt></dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="IBM1">class <strong>IBM1</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt>Class&nbsp;for&nbsp;the&nbsp;<a href="#IBM1">IBM1</a>&nbsp;translation&nbsp;model<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="IBM1-__init__"><strong>__init__</strong></a>(self, ts)</dt><dd><tt>Constructor&nbsp;of&nbsp;the&nbsp;<a href="#IBM1">IBM1</a>&nbsp;model<br>
+:param&nbsp;ts:&nbsp;the&nbsp;table&nbsp;of&nbsp;translation&nbsp;probabilites</tt></dd></dl>
+
+<dl><dt><a name="IBM1-all_alignments"><strong>all_alignments</strong></a>(self, f, e)</dt><dd><tt>return&nbsp;all&nbsp;possible&nbsp;alignments&nbsp;for&nbsp;a&nbsp;give&nbsp;couple&nbsp;of&nbsp;target&nbsp;and&nbsp;source<br>
+:param&nbsp;f:&nbsp;source&nbsp;sentence<br>
+:param&nbsp;e:&nbsp;target&nbsp;sentence<br>
+:return:&nbsp;all&nbsp;alligments&nbsp;ant&nbsp;its&nbsp;probabilites</tt></dd></dl>
+
+<dl><dt><a name="IBM1-best_alignment"><strong>best_alignment</strong></a>(self, f, e)</dt><dd><tt>Find&nbsp;the&nbsp;best&nbsp;possible&nbsp;aligment&nbsp;for&nbsp;a&nbsp;give&nbsp;couple&nbsp;of&nbsp;target&nbsp;and&nbsp;source<br>
+:param&nbsp;f:&nbsp;source&nbsp;sentence<br>
+:param&nbsp;e:&nbsp;target&nbsp;sentence<br>
+:return:&nbsp;return&nbsp;the&nbsp;best&nbsp;aligment&nbsp;and&nbsp;its&nbsp;probability</tt></dd></dl>
+
+<dl><dt><a name="IBM1-p"><strong>p</strong></a>(self, f, a, e)</dt><dd><tt>compute&nbsp;the&nbsp;probability&nbsp;of&nbsp;a&nbsp;certain&nbsp;translation&nbsp;f<br>
+and&nbsp;a&nbsp;certain&nbsp;aligment&nbsp;a<br>
+:param&nbsp;f:&nbsp;source&nbsp;sentence<br>
+:param&nbsp;a:&nbsp;selected&nbsp;alignment<br>
+:param&nbsp;e:&nbsp;target&nbsp;sentence<br>
+:return:&nbsp;return&nbsp;the&nbsp;probability&nbsp;of&nbsp;the&nbsp;selected&nbsp;alignment</tt></dd></dl>
+
+<dl><dt><a name="IBM1-q"><strong>q</strong></a>(self, a, f, e)</dt><dd><tt>compute&nbsp;the&nbsp;probability&nbsp;of&nbsp;certain&nbsp;aligment<br>
+in&nbsp;the&nbsp;<a href="#IBM1">IBM1</a>&nbsp;&nbsp;model&nbsp;each&nbsp;aligment&nbsp;is&nbsp;equiprobable<br>
+:param&nbsp;a:&nbsp;selected&nbsp;aligment<br>
+:param&nbsp;f:&nbsp;source&nbsp;sentence<br>
+:param&nbsp;e:&nbsp;target&nbsp;sentence<br>
+:return:&nbsp;return&nbsp;1./((1+e_len)**f_len)</tt></dd></dl>
+
+<dl><dt><a name="IBM1-set_ts"><strong>set_ts</strong></a>(self, ts)</dt></dl>
+
+<dl><dt><a name="IBM1-t"><strong>t</strong></a>(self, fi, ei)</dt><dd><tt>compute&nbsp;the&nbsp;probability&nbsp;of&nbsp;a&nbsp;certain&nbsp;word&nbsp;translation<br>
+:param&nbsp;fi:&nbsp;source&nbsp;word<br>
+:param&nbsp;ei:&nbsp;target&nbsp;word<br>
+:return:&nbsp;return&nbsp;probability&nbsp;of&nbsp;<a href="#IBM1-t">t</a>(fi|ei)</tt></dd></dl>
+
+<dl><dt><a name="IBM1-translation_probabilty"><strong>translation_probabilty</strong></a>(self, f, e)</dt><dd><tt>Compute&nbsp;the&nbsp;global&nbsp;translation&nbsp;probability&nbsp;for&nbsp;a&nbsp;give&nbsp;couple&nbsp;of&nbsp;target<br>
+and&nbsp;source<br>
+:param&nbsp;f:&nbsp;source&nbsp;sentence<br>
+:param&nbsp;e:&nbsp;target&nbsp;sentence<br>
+:return:&nbsp;total&nbsp;translation&nbsp;probability</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-alignments"><strong>alignments</strong></a>(f, e)</dt><dd><tt>Generate&nbsp;all&nbsp;possible&nbsp;alligments&nbsp;for&nbsp;a&nbsp;given&nbsp;couple&nbsp;of&nbsp;sentences<br>
+:param&nbsp;f:&nbsp;source&nbsp;sentence<br>
+:param&nbsp;e:&nbsp;target&nbsp;sentence<br>
+:return:&nbsp;return&nbsp;all&nbsp;possible&nbsp;alignments</tt></dd></dl>
+ <dl><dt><a name="-split"><strong>split</strong></a>(sentence)</dt></dl>
+</td></tr></table>
+</body></html>

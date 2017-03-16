@@ -44,7 +44,7 @@ f = get_source(config)
 for e in get_targets(config):
     print('F: '+sentence(f))
     print('E: '+sentence(e))
-    a, pa = ibm.best_alligment(f, e)
+    a, pa = ibm.best_alignment(f, e)
     pt = ibm.translation_probabilty(f, e)
     print_stats(a, pa, pt)
     print()
