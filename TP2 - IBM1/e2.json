@@ -1,19 +1,19 @@
 {
   "ts":{
     "bleue":{
-      "house" : 0.333,
-      "blue": 0.333,
-      "the" : 0.333
+      "house" : 0.3,
+      "blue": 0.3,
+      "the" : 0.3
     },
     "maison":{
-      "house" : 0.3333,
-      "blue": 0.3333,
-      "the" : 0.3333
+      "house" : 0.3,
+      "blue": 0.3,
+      "the" : 0.3
     },
     "la":{
-      "house" : 0.333,
-      "blue":0.333,
-      "the" : 0.333
+      "house" : 0.3,
+      "blue":0.3,
+      "the" : 0.3
     }
   },
   "sentences":[

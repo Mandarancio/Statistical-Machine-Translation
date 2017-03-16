@@ -34,23 +34,24 @@ class IBM1:
     compute the probability of certain aligment
     in the IBM1  model each aligment is equiprobable
     '''
-    def q(self, a, f, e, normed=False):
+    def q(self, a, f, e):
         f_len = len(f)
         e_len = len(e)
-        if normed:
-            return 1./(e_len**f_len)
         return 1./((1+e_len)**f_len)
+        # return 1
 
     '''
     compute the probability of a certain translation f and a certain aligment a
     '''
-    def p(self, f, a, e, normed=False):
+    def p(self, f, a, e):
         ret = 1
+
         for j in range(0, len(f)):
-            # print(e[a[j]]+' -> '+f[j]+' : '+str(self.t(f[j], e[a[j]])))
+            #if e == ["la","maison"]:
+            #    print('   '+f[a[j]]+' -> '+e[j]+' : '+str(self.t(f[j], e[a[j]])))
             # debug output
             ret *= self.t(f[j], e[a[j]])
-        return self.q(a, f, e, normed)*ret
+        return self.q(a, f, e)*ret
 
     '''
     Find the best possible aligment
@@ -76,11 +77,11 @@ class IBM1:
             total += self.p(f, a, e)
         return total
 
-    def all_allignement(self, f, e, normed=False):
+    def all_allignement(self, f, e):
         als = alligments(f, e)
         pbs = []
         for i in range(0, len(als)):
 
-            pt = self.p(f, als[i], e, normed)
+            pt = self.p(f, als[i], e)
             pbs.append(pt)
         return als, pbs

@@ -10,7 +10,7 @@ def print_teta(teta):
 
 
 class EM_ibm1:
-    def __init__(self, ts, epsilon=1e-1, debug=False):
+    def __init__(self, ts, epsilon=1e-5, debug=False):
         self.__tetas__ = ts
         # self.__expectation__= {}
         self.__epsilon__ = epsilon
@@ -48,29 +48,26 @@ class EM_ibm1:
                     r.append(f[x])
                 if self.__Debug__:
                     print(' '.join(r)+' : '+str(p))
-                events = {}
 
-                for k in r:
-                    if k in events:
-                        events[k] += 1 * p
-                    else:
-                        events[k] = 1 * p
                 denominator = 0
                 for x in probabilites:
                     if (x in e):
                         # print('x: '+x)
                         probabilites[x] = 1
-                        for k in events:
-                            # print('  k: '+k + '('+str(p)+')')
-                            probabilites[x] *= (self.__tetas__[x][k]
-                                                ** p)
-                        denominator += probabilites[x]
+                        for k in r:
+                            probabilites[x] *= (self.__tetas__[x][k] ** p)
                 for x in exp:
                     if x in e:
-                        for k in events:
-                            exp[x][k] += (probabilites[x]/denominator)\
-                                * events[k]
-        print(exp)
+                        for k in r:
+                            exp[x][k] += probabilites[x]
+
+        for x in exp:
+            d = 0
+            for k in exp[x]:
+                d += exp[x][k]
+            for k in exp[x]:
+                exp[x][k] /= d
+
         return exp
 
     def __maximization(self, exp):
