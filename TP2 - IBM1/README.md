@@ -42,7 +42,7 @@ Translation probability: 0.13999999999999999
 
 To execute the exercise run ```e2.py``` script with argument ```e2.json```
 
-After adapting the previously implemented EM algorithm for the IBM model 1, I used it over the given datas. After 5 iterations it converged (the convergency condition is an epsilon=1e-5) with the following results:
+After adapting the previously implemented EM algorithm for the IBM model 1, I used it over the given datas:
 
 - bleue :
   + house : 0.4975656836219058
