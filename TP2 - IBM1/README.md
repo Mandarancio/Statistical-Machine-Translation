@@ -9,50 +9,63 @@ contain the specified parameters.
 
 The results for the given example are the following:
 
-**E: das Haus ist klein   
-F: the house is small   **
+**F: das Haus ist klein   
+E: the house is small**   
+  Best aligment: (0, 1, 2, 3)   
+  Aligment probability: 0.00028672   
+  Translation probability: 0.00028672   
 
-Best aligment: (0, 1, 2, 3)   
-Aligment probability: 0.00028672   
-Translation probability: 0.00028672   
+**F: das Haus ist klein    
+E: the house is little**    
+  Best aligment: (0, 1, 2, 3)   
+  Aligment probability: 0.00028672   
+  Translation probability: 0.00028672   
 
-**E: das Haus ist klein   
-F: the house is little**
+**F: das Haus ist klein    
+E: small house the is**   
+  Best aligment: (2, 1, 3, 0)   
+  Aligment probability: 0.00028672   
+  Translation probability: 0.00028672   
 
-Best aligment: (0, 1, 2, 3)   
-Aligment probability: 0.00028672  
-Translation probability: 0.00028672  
+**F: das Haus ist klein   
+E: the**   
+  Best aligment: (0, 0, 0, 0)   
+  Aligment probability: 0.0   
+  Translation probability: 0.0   
 
-**E: das Haus ist klein   
-F: small house the is**
-
-Best aligment: (3, 1, 0, 2)  
-Aligment probability: 0.0002867200000000001  
-Translation probability: 0.0002867200000000001  
-
-**E: das Haus ist klein   
-F: the**
-
-Best aligment: (0,)   
-Aligment probability: 0.13999999999999999   
-Translation probability: 0.13999999999999999   
 
 
 ### Exercise 2
 
 To execute the exercise run ```e2.py``` script with argument ```e2.json```
 
-After adapting the previously implemented EM algorithm for the IBM model 1, I used it over the given datas:
+After adapting the previously implemented EM algorithm for the IBM model 1, I used it over the given data, the EM converged after 4 iterations with the following results:
 
-- bleue :
-  + house : 0.4975656836219058
-  + blue : 0.5024343163780942
-  + the : 0.0
-- maison :
-  + house : 0.5037212936707866
-  + blue : 0.25054871388179895
-  + the : 0.24572999244741456
 - la :
-  + house : 0.5024815799620439
   + blue : 0.0
-  + the : 0.49751842003795604
+  + the : 0.5024228309069763
+  + house : 0.4975771690930237
+- bleue :
+  + blue : 0.5024228309069763
+  + the : 0.0
+  + house : 0.4975771690930237
+- maison :
+  + blue : 0.24997659100159095
+  + the : 0.24997659100159095
+  + house : 0.5000468179968182
+
+
+While using 1 as alignment probability q(..) the result after 4 iteration is:
+
+- la :
+  + blue : 0.0
+  + the : 0.523484442144212
+  + house : 0.47651555785578803
+- maison :
+  + blue : 0.24789970591317362
+  + the : 0.24789970591317362
+  + house : 0.5042005881736529
+- bleue :
+  + blue : 0.523484442144212
+  + the : 0.0
+  + house : 0.47651555785578814

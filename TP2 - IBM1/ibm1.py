@@ -26,8 +26,8 @@ class IBM1:
     compute the probability of a certain word translation
     '''
     def t(self, f, e):
-        if e in self.__ts__ and f in self.__ts__[e]:
-            return self.__ts__[e][f]
+        if f in self.__ts__ and e in self.__ts__[f]:
+            return self.__ts__[f][e]
         return 0
 
     '''
@@ -38,18 +38,13 @@ class IBM1:
         f_len = len(f)
         e_len = len(e)
         return 1./((1+e_len)**f_len)
-        # return 1
 
     '''
     compute the probability of a certain translation f and a certain aligment a
     '''
     def p(self, f, a, e):
         ret = 1
-
-        for j in range(0, len(f)):
-            #if e == ["la","maison"]:
-            #    print('   '+f[a[j]]+' -> '+e[j]+' : '+str(self.t(f[j], e[a[j]])))
-            # debug output
+        for j in range(0, len(a)):
             ret *= self.t(f[j], e[a[j]])
         return self.q(a, f, e)*ret
 
@@ -81,7 +76,6 @@ class IBM1:
         als = alligments(f, e)
         pbs = []
         for i in range(0, len(als)):
-
             pt = self.p(f, als[i], e)
             pbs.append(pt)
         return als, pbs

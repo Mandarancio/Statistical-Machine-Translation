@@ -36,8 +36,8 @@ class EM_ibm1:
             M = len(x)
 
         for c in data:
-            e = ibm1.split(c['source'])
-            f = ibm1.split(c['target'])
+            f = ibm1.split(c['source'])
+            e = ibm1.split(c['target'])
             als, probs = self.__ibm1__.all_allignement(f, e)
             if self.__Debug__:
                 print('\n'+' '.join(e))
@@ -45,19 +45,19 @@ class EM_ibm1:
                 p = probs[j]
                 r = []
                 for x in als[j]:
-                    r.append(f[x])
+                    r.append(e[x])
                 if self.__Debug__:
                     print(' '.join(r)+' : '+str(p))
 
                 denominator = 0
                 for x in probabilites:
-                    if (x in e):
+                    if (x in f):
                         # print('x: '+x)
                         probabilites[x] = 1
                         for k in r:
                             probabilites[x] *= (self.__tetas__[x][k] ** p)
                 for x in exp:
-                    if x in e:
+                    if x in f:
                         for k in r:
                             exp[x][k] += probabilites[x]
 
@@ -67,6 +67,7 @@ class EM_ibm1:
                 d += exp[x][k]
             for k in exp[x]:
                 exp[x][k] /= d
+        # print_teta(exp)
 
         return exp
 

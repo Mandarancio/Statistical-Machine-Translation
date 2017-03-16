@@ -40,10 +40,10 @@ with open(conf) as data_file:
 ts = config['ts']
 ibm = ibm1.IBM1(ts)
 a = [0, 1, 2, 3]
-e = get_source(config)
-for f in get_targets(config):
-    print('E: '+sentence(e))
+f = get_source(config)
+for e in get_targets(config):
     print('F: '+sentence(f))
+    print('E: '+sentence(e))
     a, pa = ibm.best_alligment(f, e)
     pt = ibm.translation_probabilty(f, e)
     print_stats(a, pa, pt)
