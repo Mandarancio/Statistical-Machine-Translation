@@ -1,5 +1,4 @@
 import math
-import ibm1
 from collections import defaultdict
 
 
@@ -18,10 +17,9 @@ class EM_ibm1:
     :param debug: debug flag
     """
     def __init__(self, ts, epsilon=1e-3, debug=False):
-        self.__tetas__ = ts
         # self.__expectation__= {}
         self.__epsilon__ = epsilon
-        self.__ibm1__ = ibm1.IBM1(ts)
+        self.__t__ = ts
         self.__Debug__ = debug
 
     def tetas(self):
@@ -35,32 +33,36 @@ class EM_ibm1:
         expectation step
         """
         # Computed expectation
-        exp = defaultdict(lambda: defaultdict(float))
+        count = defaultdict(lambda: defaultdict(float))
         # Number of classes
+        total = defaultdict(float)
         probabilites = defaultdict(lambda: 1)
-    
+        print('   counting...')
         for c in data:
-            s = ibm1.split(c['source'])
-            t = ibm1.split(c['target'])
+            s = c['source'].split()
+            t = c['target'].split()
+            s_total = defaultdict(float)
             for w in s:
                 for k in t:
-                    exp[w][k] += self.__ibm1__.t(w,k)
-        return exp
+                    s_total[w] += self.__t__[w][k]
+            for w in s:
+                for k in t:
+                    p = self.__t__[w][k]
+                    count[w][k] += p/s_total[w]
+                    total[k]+= p/s_total[w]
+            del s_total
+        print('   normalizing...')
+        for e in count:
+            for f in count[e]:
+                count[e][f]/=total[f]
+        del total
+        return count
 
     def __maximization(self, exp):
         """
         maximization step
         """
-        # new tetas
-        tetas = exp
-        for x in self.__tetas__:
-            total = 0
-            for k in self.__tetas__[x]:
-                total += tetas[x][k]
-            if total > 0:     
-                for k in self.__tetas__[x]:
-                    tetas[x][k] /= total
-        return tetas
+        return exp
 
     def __diff(self, teta):
         """
@@ -72,10 +74,10 @@ class EM_ibm1:
             print('  Computing difference...')
         for x in teta:
             for k in teta[x]:
-                diff += math.fabs(teta[x][k]-self.__tetas__[x][k])
+                diff += math.fabs(teta[x][k]-self.__t__[x][k])
                 size+=1
         if self.__Debug__:
-            print('  average diff: {}'.format(diff/size))
+            print('   average diff: {}'.format(diff/size))
         return diff/size
 
     def optimize(self, data, MAX=1e9):
@@ -94,13 +96,13 @@ class EM_ibm1:
             exp = self.__expectation(data)
             if self.__Debug__:
                 print('  Maximation step...')
-            teta = self.__maximization(exp)
+            exp = self.__maximization(exp)
             diff = self.__diff(teta)
             counter += 1
-            self.__tetas__ = teta
-            self.__ibm1__.set_ts(teta)
+            del self.__t__
+            self.__t__ = exp
             if diff <= self.__epsilon__:
                 converged = True
                 if self.__Debug__:
-                    print('\n --- CONVERGED AFTER {} iterations ---\n'.fomat(counter))
-        return self.__tetas__
+                    print('\n --- CONVERGED AFTER {} iterations ---\n'.format(counter))
+        return self.__t__
