@@ -2,6 +2,7 @@
   "training" : {
     "path" : "training/",
     "sourcefile" : "europarl_50k_es_en.es",
-    "targetfile" : "europarl_50k_es_en.en"
+    "targetfile" : "europarl_50k_es_en.en",
+    "datafile" : "training.json"
   }
 }
