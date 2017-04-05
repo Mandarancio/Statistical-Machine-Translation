@@ -89,5 +89,6 @@ ENV/
 .ropeproject
 
 # Training data
-training.json
-tetas.json
+training*.json
+tetas*.json
+tt_*.json

@@ -1,5 +1,6 @@
 import math
 from collections import defaultdict
+import sys
 
 
 def print_teta(teta):
@@ -16,7 +17,7 @@ class EM_ibm1:
     :param epsilon: convergence epsilon value
     :param debug: debug flag
     """
-    def __init__(self, ts, epsilon=1e-3, debug=False):
+    def __init__(self, ts, epsilon=1e-5, debug=False):
         # self.__expectation__= {}
         self.__epsilon__ = epsilon
         self.__t__ = ts
@@ -26,7 +27,7 @@ class EM_ibm1:
         """
         :return: the tetas of the EM, equivalent to the translation table
         """
-        return self.__tetas__
+        return self.__t__
 
     def __expectation(self, data):
         """
@@ -37,7 +38,9 @@ class EM_ibm1:
         # Number of classes
         total = defaultdict(float)
         probabilites = defaultdict(lambda: 1)
-        print('   counting...')
+        sys.stdout.write('   counting: 0 sentences')
+        sys.stdout.flush()
+        counter = 0
         for c in data:
             s = c['source'].split()
             t = c['target'].split()
@@ -49,12 +52,19 @@ class EM_ibm1:
                 for k in t:
                     p = self.__t__[w][k]
                     count[w][k] += p/s_total[w]
-                    total[k]+= p/s_total[w]
+                    total[k] += p/s_total[w]
             del s_total
-        print('   normalizing...')
+            counter += 1
+            sys.stdout.write('\r   counting: {} senteces'.format(counter))
+        print()
+        sys.stdout.write('   normalizing: 0 words')
+        counter = 0
         for e in count:
             for f in count[e]:
-                count[e][f]/=total[f]
+                count[e][f] /= total[f]
+                counter += 1
+            sys.stdout.write('\r   normalizing: {} words'.format(counter))
+        print('')
         del total
         return count
 
@@ -75,7 +85,7 @@ class EM_ibm1:
         for x in teta:
             for k in teta[x]:
                 diff += math.fabs(teta[x][k]-self.__t__[x][k])
-                size+=1
+                size += 1
         if self.__Debug__:
             print('   average diff: {}'.format(diff/size))
         return diff/size
@@ -97,12 +107,13 @@ class EM_ibm1:
             if self.__Debug__:
                 print('  Maximation step...')
             exp = self.__maximization(exp)
-            diff = self.__diff(teta)
+            # diff = self.__diff(exp)
             counter += 1
             del self.__t__
             self.__t__ = exp
-            if diff <= self.__epsilon__:
-                converged = True
-                if self.__Debug__:
-                    print('\n --- CONVERGED AFTER {} iterations ---\n'.format(counter))
+            # if diff <= self.__epsilon__:
+            #     converged = True
+            #     if self.__Debug__:
+            #        print('\n --- CONVERGED AFTER {} iterations ---\n'.format(
+            #                 counter))
         return self.__t__

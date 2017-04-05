@@ -1,8 +1,18 @@
 {
   "training" : {
-    "path" : "training/",
-    "sourcefile" : "europarl_50k_es_en.es",
-    "targetfile" : "europarl_50k_es_en.en",
-    "datafile" : "training.json"
-  }
+    "sourcefile" : "training/europarl_50k_es_en.en",
+    "targetfile" : "training/europarl_50k_es_en.es",
+    "nsentences" : -1,
+    "translationfile" : "resources/tt_en_es.json",
+    "em_maxiters" : 5,
+    "em_epsilon" : 0.0001
+  },
+   "testing": {
+       "sourcefile" : "test/test.en",
+       "targetfile" : "test/test.es",
+       "goldfile" : "test/test.align",
+       "alignsfile" : "test/myalignments",
+       "probsfile" : "test/myprobs"
+  },
+  "debug": true
 }

@@ -43,7 +43,7 @@ class IBM1:
         if fi in self.__ts__ and ei in self.__ts__[fi]:
             return self.__ts__[fi][ei]
         return 0
-    
+
     def q(self, a, f, e):
         """
         compute the probability of certain aligment
@@ -78,14 +78,17 @@ class IBM1:
         :param e: target sentence
         :return: return the best aligment and its probability
         """
-        als = alignments(f, e)
-        selected = als[0]
-        probability = self.p(f, selected, e)
-        for a in als:
-            pt = self.p(f, a, e)
-            if pt > probability:
-                probability = pt
-                selected = a
+        selected = []
+        probability = 1
+        for i in range(0, len(f)):
+            sel = -1
+            prob = -1
+            for j in range(0, len(e)):
+                if self.t(f[i], e[j]) > prob:
+                    sel = j
+                    prob = self.t(f[i], e[j])
+            probability *= prob
+            selected.append(sel)
         return selected, probability
 
     def translation_probabilty(self, f, e):
@@ -96,7 +99,7 @@ class IBM1:
         :param e: target sentence
         :return: total translation probability
         """
-        als = alignments(f, e)
+        als = alignments(e, f)
         total = 0
         for a in als:
             total += self.p(f, a, e)
@@ -109,7 +112,7 @@ class IBM1:
         :param e: target sentence
         :return: all alligments ant its probabilites
         """
-        als = alignments(f, e)
+        als = alignments(e, f)
         pbs = []
         for i in range(0, len(als)):
             pt = self.p(f, als[i], e)
