@@ -90,3 +90,4 @@ ENV/
 
 # Training data
 training.json
+tetas.json

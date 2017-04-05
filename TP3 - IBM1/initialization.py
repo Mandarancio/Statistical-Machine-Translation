@@ -11,8 +11,8 @@ def generate_training_data(datas):
             "source": data[0],
             "target": data[1]
         })
-        s = data[0].split(' ')
-        t = data[1].split(' ')
+        s = data[0].strip().split()
+        t = data[1].strip().split()
         for w in s:
             for k in t:
                 counter[w]+=1
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     print('Using files: {}, {}'.format(s_path, t_path))
     o_path = folder + config['training']['datafile']
     sentences, tetas = generate_training_data(read_training(s_path, t_path))
-    print('Saving training data {}'.format(o_path))
+    print('Saving training data >> {}'.format(o_path))
     with open(o_path,"w") as f:
         output = {
             "sentences": sentences,

@@ -40,10 +40,8 @@ class IBM1:
         :param ei: target word
         :return: return probability of t(fi|ei)
         """
-        if fi in self.__ts__ and ei in self.__ts__[fi]:
-            return self.__ts__[fi][ei]
-        return 0
-
+        return self.__ts__[fi][ei]
+        
     def q(self, a, f, e):
         """
         compute the probability of certain aligment
