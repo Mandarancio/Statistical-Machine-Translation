@@ -41,7 +41,7 @@ def read_training(sourcepath, targetpath, debug=False, nsentences=-1):
     target = open(targetpath, 'r')
     count = 0
     for s in source:
-        if nsentences > -1 and count > nsentences:
+        if nsentences > -1 and count >= nsentences:
             break
         t = target.readline()
         count += 1
