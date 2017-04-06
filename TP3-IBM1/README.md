@@ -10,7 +10,7 @@ Martino Ferrari
 +-- resources/          < folder containing the optional static translation tables
 +-- test/               < folder containing the optional static translation tables
 |   +-- myalignments    < output of main.py
-|   +-- m
+|   +-- test.align.es	< gold file for translation es -> en (inversed index)
 +-- training/           < folder containing the training data set
 +-- conf.json           < example of configuration (optional)
 +-- main.py             < main script with all the required functinality
