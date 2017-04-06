@@ -70,5 +70,5 @@ the number of EM  iterations is more complex and has a  phase transition at
 around 5 iterations. That's mean that after 5 iteration the algorithm converge
 and there are no big improvments after that.
 
-[em_plot]: plots/plot_em_issst.png
+[em_plot]: plots/plot_em_it.png
 [ts_plot]: plots/plot_training.png
