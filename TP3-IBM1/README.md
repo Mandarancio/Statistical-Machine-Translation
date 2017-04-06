@@ -47,4 +47,15 @@ Performances with diffrent number of EM Iterations:
 |English → Spanish|10000|          3|    0.537| 0.439|   0.483|  42s|
 |English → Spanish|10000|          2|    0.534| 0.437|   0.481|  29s|
 |English → Spanish|10000|          1|    0.418| 0.342|   0.376|  16s|
+|English → Spanish|10000|          0|    0.049| 0.040|   0.044|   3s|
 
+To understand better the results I choose to plot the dependency of the F1 
+Score to the number of EM iterations and to the training-set size. Moreover
+I choose to see the computation time trend.
+
+![F1 Score vs EM Iterations][em_plot]
+
+![F1 Score vs TSet Size][ts_plot]
+
+[em_plot]: plots/plot_em_it.png
+[ts_plot]: plots/plot_training.png
