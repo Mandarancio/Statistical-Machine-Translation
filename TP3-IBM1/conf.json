@@ -2,8 +2,8 @@
   "training" : {
     "sourcefile" : "training/europarl_50k_es_en.en",
     "targetfile" : "training/europarl_50k_es_en.es",
-    "nsentences" : -1,
-    "translationfile" : "resources/tt_en_es.json",
+    "nsentences" : 1000,
+    "translationfile" : "resources/tt_en_es_1000.json",
     "em_maxiters" : 5,
     "em_epsilon" : 0.0001
   },

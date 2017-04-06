@@ -26,6 +26,10 @@ Martino Ferrari
 
 ## Overall Results
 
-|Language|N training|Precision|Recall|F1 Score|
-|--------|---------:|--------:|-----:|-------:|
-|English → Spanish|50000|0.596| 0.487|   0.536|
+|Language|N training|N its|Precision|Recall|F1 Score|
+|--------|---------:|----:|--------:|-----:|-------:|
+|English → Spanish|50000|5|    0.596| 0.487|   0.536|
+|English → Spanish|10000|5|    0.540| 0.441|   0.485|
+|English → Spanish| 5000|5|    0.508| 0.415|   0.457|
+|English → Spanish| 1000|5|    0.398| 0.325|   0.358|
+
