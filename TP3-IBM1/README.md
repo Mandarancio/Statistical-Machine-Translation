@@ -18,7 +18,7 @@ Martino Ferrari
 ```
 ## EM
 ## IBM1
-##Results 
+## Results 
 
 Performances with different sizes of training data:
 
