@@ -38,6 +38,10 @@ Martino Ferrari
 |English → Spanish|10000|1|    0.418| 0.342|   0.376|  16s|
 |English → Spanish| 5000|5|    0.508| 0.415|   0.457|  34s|
 |English → Spanish| 1000|5|    0.398| 0.325|   0.358|   7s|
+
+
+|Language|# Training|# Its|Precision|Recall|F1 Score| Time|
+|--------|---------:|----:|--------:|-----:|-------:|----:|
 |Spanish → English|10000|5|    0.499| 0.446|   0.470|  67s|
 |Spanish → English| 5000|5|    0.468| 0.418|   0.442|  33s|
 |Spanish → English| 1000|5|    0.373| 0.334|   0.352|   8s|
