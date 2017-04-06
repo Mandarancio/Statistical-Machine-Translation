@@ -54,7 +54,6 @@ Score to the number of EM iterations and to the training-set size. Moreover
 I choose to see the computation time trend.
 
 ![F1 Score vs EM Iterations][em_plot]
-
 ![F1 Score vs TSet Size][ts_plot]
 
 [em_plot]: plots/plot_em_it.png
