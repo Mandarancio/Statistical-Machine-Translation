@@ -42,6 +42,11 @@ Performances with diffrent number of EM Iterations:
 
 |Language|# Training|# EM Iterations|Precision|Recall|F1 Score| Time|
 |--------|---------:|--------------:|--------:|-----:|-------:|----:|
+|English → Spanish|10000|         10|    0.541| 0.442|   0.486| 135s|
+|English → Spanish|10000|          9|    0.541| 0.442|   0.486| 119s|
+|English → Spanish|10000|          8|    0.541| 0.442|   0.486| 105s|
+|English → Spanish|10000|          7|    0.540| 0.441|   0.485|  95s|
+|English → Spanish|10000|          6|    0.540| 0.441|   0.485|  86s|
 |English → Spanish|10000|          5|    0.540| 0.441|   0.485|  68s|
 |English → Spanish|10000|          4|    0.538| 0.440|   0.484|  54s|
 |English → Spanish|10000|          3|    0.537| 0.439|   0.483|  42s|
@@ -61,7 +66,9 @@ number of EM iterations and both on the size of the training data-set.
 
 Instead the quality of the results (F1 Score) has a logaritmic trend vs
 the size of the training data-set. However The trend of the F1 score agains
-the number of EM  iterations is more complex and has a phase transition.
+the number of EM  iterations is more complex and has a  phase transition at 
+around 5 iterations. That's mean that after 5 iteration the algorithm converge
+and there are no big improvments after that.
 
 [em_plot]: plots/plot_em_it.png
 [ts_plot]: plots/plot_training.png
