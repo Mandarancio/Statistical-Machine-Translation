@@ -56,5 +56,12 @@ I choose to see the computation time trend.
 ![F1 Score vs EM Iterations][em_plot]
 ![F1 Score vs TSet Size][ts_plot]
 
+As expected the computation time increase linearly both depending on the 
+number of EM iterations and both on the size of the training data-set.
+
+Instead the quality of the results (F1 Score) has a logaritmic trend vs
+the size of the training data-set. However The trend of the F1 score agains
+the number of EM  iterations is more complex and has a phase transition.
+
 [em_plot]: plots/plot_em_it.png
 [ts_plot]: plots/plot_training.png
