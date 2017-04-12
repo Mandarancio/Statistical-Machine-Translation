@@ -10,7 +10,6 @@ Optional script to generate and store the translation tables, instead of
 compute it on the fly every time.
 '''
 
-
 if __name__ == "__main__":
     if len(sys.argv) == 2:
         conf = sys.argv[1]
@@ -18,15 +17,14 @@ if __name__ == "__main__":
 
     with open(conf) as data_file:
         config = json.load(data_file)
-    if config['debug']:
-        print('Reading initial values and sentences...')
+
+    print('Reading initial values and sentences...')
 
     output = config['training']['translationfile']
     t = time.time()
     teta = T.train(config)
     t = time.time() - t
     print("time to train {}s".format(t))
-    if config['debug']:
-        print('save >> {}'.format(output))
+    print('save >> {}'.format(output))
     with open(output, 'w') as f:
         json.dump(teta, f)

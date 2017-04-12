@@ -6,7 +6,7 @@ import core.em_ibm as em
 from collections import defaultdict
 
 
-def generate_training_data(datas, debug=False):
+def initialize_translation_table(datas):
     tetas = defaultdict(lambda: defaultdict(float))
     sentences = []
     for data in datas:
@@ -19,24 +19,21 @@ def generate_training_data(datas, debug=False):
         for w in s:
             for k in t:
                 tetas[w][k] = 1
-    if debug:
-        print("Normalize relative frequencies")
+
+    print("Normalize relative frequencies")
     c = 0
     for w in tetas:
         for k in tetas[w]:
             tetas[w][k] /= len(tetas[w])
         c += 1
-        if debug:
-            sys.stdout.write('\r{} words'.format(c))
-            sys.stdout.flush()
-    if debug:
-        print('')
+        sys.stdout.write('\r{} words'.format(c))
+        sys.stdout.flush()
+    print('')
     return sentences, tetas
 
 
-def read_training(sourcepath, targetpath, debug=False, nsentences=-1):
-    if debug:
-        print("Computing relative frequencies...")
+def read_training(sourcepath, targetpath, nsentences=-1):
+    print("Computing relative frequencies...")
     source = open(sourcepath, 'r')
     target = open(targetpath, 'r')
     count = 0
@@ -45,31 +42,26 @@ def read_training(sourcepath, targetpath, debug=False, nsentences=-1):
             break
         t = target.readline()
         count += 1
-        if debug:
-            sys.stdout.write('\r{} lines'.format(count))
-            sys.stdout.flush()
+        sys.stdout.write('\r{} lines'.format(count))
+        sys.stdout.flush()
         yield [s, t]
-    if debug:
-        print('')
+    print('')
 
 
 def train(config):
     t = config['training']
     s_path = t['sourcefile']
     t_path = t['targetfile']
-    if config['debug']:
-        print('Using files: {}, {}'.format(s_path, t_path))
+    print('Using files: {}, {}'.format(s_path, t_path))
 
-    sentences, tetas = generate_training_data(read_training(s_path, t_path,
-                                              debug=config['debug'],
-                                              nsentences=t['nsentences']),
-                                              config['debug'])
+    sentences, tetas = initialize_translation_table(read_training(s_path,
+                                                    t_path,
+                                                    nsentences=t['nsentences'])
+                                                    )
 
-    i_em = em.EM_ibm1(tetas, debug=config['debug'],
-                      epsilon=t['em_epsilon'])
+    i_em = em.EM_ibm1(tetas, epsilon=t['em_epsilon'])
 
-    if config['debug']:
-        print('Optimizing...')
+    print('Optimizing...')
 
     teta = i_em.optimize(sentences, MAX=t['em_maxiters'])
     return teta
@@ -82,13 +74,11 @@ if __name__ == "__main__":
 
     with open(conf) as data_file:
         config = json.load(data_file)
-    if config['debug']:
-        print('Reading initial values and sentences...')
+    print('Reading initial values and sentences...')
 
     output = config['training']['translationfile']
 
     teta = train(config)
-    if config['debug']:
-        print('save >> {}'.format(output))
+    print('save >> {}'.format(output))
     with open(output, 'w') as f:
         json.dump(teta, f)

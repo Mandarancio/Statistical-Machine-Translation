@@ -6,6 +6,8 @@ import argparse
 import json
 import os.path
 import sys
+import operator
+import time
 
 
 def train(conf):
@@ -41,11 +43,13 @@ def test(config, translation_table):
     sourcepath = config['testing']['sourcefile']
     targetpath = config['testing']['targetfile']
     alignements = []
+    parallel_corpus = {}
     with open(sourcepath) as source, open(targetpath) as target:
         for s, t in zip(source, target):
             alignement, prob = tm.best_alignment(s.split(), t.split())
+            parallel_corpus[(s, t)] = prob
             alignements.append((alignement, prob))
-    return alignements
+    return alignements, parallel_corpus
 
 
 def score(config, test_results):
@@ -91,26 +95,41 @@ def write_alignments(outputpath, test_results):
             f.write('\n')
 
 
+def write_translations(outputpath, parallel_corpus):
+    '''
+    write down the translation ordered by its probability
+    :param outputpath: destination
+    :param parallel_corpus: translations and its probabilites
+    '''
+    sorted_corpus = sorted(parallel_corpus.items(), key=operator.itemgetter(1),
+                           reverse=True)
+    with open(outputpath, 'w') as f:
+        for sentences, probability in sorted_corpus:
+            source = sentences[0].replace('\n', '')
+            target = sentences[1].replace('\n', '')
+            f.write("{:.3E} : {} <==> {}\n".format(probability, source,
+                                                   target))
+
+
 def __args_to_conf__(args):
     conf = {
-      "training": {
-        "sourcefile": args.traindata+".en",
-        "targetfile": args.traindata+".es",
-        "nsentences": args.nsentences,
-        "translationfile": "resources/tt_en_es.json",
-        "em_maxiters": args.em_maxiters,
-        "em_epsilon": 0.0001
-      },
-      "testing": {
-        "sourcefile": args.testdata+".en",
-        "targetfile": args.testdata+".es",
-        "goldfile": args.testdata+".align",
-        "alignsfile": "test/myalignments",
-        "probsfile": "test/myprobs"
-      },
-      "debug": True
+        "training": {
+            "sourcefile": args.traindata + ".en",
+            "targetfile": args.traindata + ".es",
+            "nsentences": args.nsentences,
+            "translationfile": "resources/tt_en_es.json",
+            "em_maxiters": args.em_maxiters,
+            "em_epsilon": 0.0001
+        },
+        "testing": {
+            "sourcefile": args.testdata + ".en",
+            "targetfile": args.testdata + ".es",
+            "goldfile": args.testdata + ".align",
+            "alignsfile": "test/myalignments",
+            "translationsfile": "test/mytranslations",
+            "probsfile": "test/myprobs"
+        }
     }
-
     return conf
 
 
@@ -142,9 +161,19 @@ if __name__ == "__main__":
             tt = json.load(f)
     else:
         print('Generating Translation Table...')
+        co = time.time()
         tt = train(conf)
+        co = time.time() - co
+        print("Time to train {}s".format(co))
+        output = config['training']['translationfile']
+        print("Saving translation_table to {}".format(output))
+        with open(output, 'w') as f:
+            json.dump(teta, f)
+
     print('Evaluating...')
-    als = test(conf, tt)
+    als, parallel_corpus = test(conf, tt)
     write_alignments(conf['testing']['alignsfile'], als)
+    write_translations(conf['testing']['translationsfile'], parallel_corpus)
     precision, recall, f1 = score(conf, als)
-    print('precision: {}\nrecall: {}\nF1: {}'.format(precision, recall, f1))
+    print('precision: {:.3f}\nrecall: {:.3f}\nF1: {:.3f}'.format(precision,
+                                                                 recall, f1))

@@ -4,10 +4,14 @@ import sys
 
 
 def print_teta(teta):
+    """
+    Pretty print for translation table
+    :param teta: translation table
+    """
     for k in teta:
-        print(' - '+k+' : ')
+        print(' - ' + k + ' : ')
         for kk in teta[k]:
-            print('   + '+kk+' : '+str(teta[k][kk]))
+            print('   + ' + kk + ' : ' + str(teta[k][kk]))
 
 
 class EM_ibm1:
@@ -17,11 +21,11 @@ class EM_ibm1:
     :param epsilon: convergence epsilon value
     :param debug: debug flag
     """
-    def __init__(self, ts, epsilon=1e-5, debug=False):
+
+    def __init__(self, ts, epsilon=1e-5):
         # self.__expectation__= {}
         self.__epsilon__ = epsilon
         self.__t__ = ts
-        self.__Debug__ = debug
 
     def tetas(self):
         """
@@ -29,15 +33,16 @@ class EM_ibm1:
         """
         return self.__t__
 
-    def __expectation(self, data):
+    def __step(self, data):
         """
-        expectation step
+        optimization step
+        :param data: training data
+        :return: new translation table
         """
-        # Computed expectation
+        # counter
         count = defaultdict(lambda: defaultdict(float))
-        # Number of classes
+        # Normalizer factor for class
         total = defaultdict(float)
-        probabilites = defaultdict(lambda: 1)
         sys.stdout.write('   counting: 0 sentences')
         sys.stdout.flush()
         counter = 0
@@ -51,8 +56,8 @@ class EM_ibm1:
             for w in s:
                 for k in t:
                     p = self.__t__[w][k]
-                    count[w][k] += p/s_total[w]
-                    total[k] += p/s_total[w]
+                    count[w][k] += p / s_total[w]
+                    total[k] += p / s_total[w]
             del s_total
             counter += 1
             sys.stdout.write('\r   counting: {} senteces'.format(counter))
@@ -68,27 +73,21 @@ class EM_ibm1:
         del total
         return count
 
-    def __maximization(self, exp):
-        """
-        maximization step
-        """
-        return exp
-
     def __diff(self, teta):
         """
         difference between new tetas and old tetas
+        :param teta: new translation table
+        :return: avarage difference between new and old translation table
         """
         diff = 0
         size = 0
-        if self.__Debug__:
-            print('  Computing difference...')
+        print('  Computing difference...')
         for x in teta:
             for k in teta[x]:
-                diff += math.fabs(teta[x][k]-self.__t__[x][k])
+                diff += math.fabs(teta[x][k] - self.__t__[x][k])
                 size += 1
-        if self.__Debug__:
-            print('   average diff: {}'.format(diff/size))
-        return diff/size
+        print('   average diff: {}'.format(diff / size))
+        return diff / size
 
     def optimize(self, data, MAX=1e9):
         """
@@ -100,13 +99,10 @@ class EM_ibm1:
         converged = False
         counter = 0
         while not converged and counter < MAX:
-            if self.__Debug__:
-                print('\n Iteration:  {}'.format(counter+1))
-                print('  Expectation step...')
-            exp = self.__expectation(data)
-            if self.__Debug__:
-                print('  Maximation step...')
-            exp = self.__maximization(exp)
+            print('\n Iteration:  {}'.format(counter + 1))
+            print('  Expectation step...')
+            exp = self.__step(data)
+            print('  Maximation step...')
             # diff = self.__diff(exp)
             counter += 1
             del self.__t__

@@ -55,7 +55,7 @@ class IBM1:
         """
         f_len = len(f)
         e_len = len(e)
-        return 1./((1+e_len)**f_len)
+        return 1. / ((1 + e_len)**f_len)
 
     def p(self, f, a, e):
         """
@@ -69,7 +69,7 @@ class IBM1:
         ret = 1
         for j in range(0, len(a)):
             ret *= self.t(f[j], e[a[j]])
-        return self.q(a, f, e)*ret
+        return self.q(a, f, e) * ret
 
     def best_alignment(self, f, e):
         """
