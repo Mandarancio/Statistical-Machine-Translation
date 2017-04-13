@@ -3,20 +3,21 @@ Martino Ferrari
 
 ## Project Structure
 
-```
+```none
 .
-+-- core/               < folder containing all the functional code of the project
++-- core/               < core code folder
+|   +-- __init__.py
 |   +-- em_ibm.py       < EM algorithm
 |   +-- ibm1.py         < IBM Translation Model 1
 |   +-- train.py        < training pipeline
-+-- resources/          < folder containing the optional static translation tables
-+-- test/               < folder containing the optional static translation tables
++-- resources/          < folder containing the generated translation tables
++-- test/               < folder containing the generated translation tables
 |   +-- myalignments    < output of main.py
 |   +-- test.align.es   < gold file for translation es -> en (inversed index)
 +-- training/           < folder containing the training data set
 +-- conf.json           < example of configuration (optional)
 +-- main.py             < main script with all the required functinality
-+-- generate_tables.py  < script to generate static translation table (optional)
++-- generate_tables.py  < script to generate translation tables (optional)
 ```
 ## Usage
 
@@ -41,7 +42,8 @@ optional arguments:
   -t TRAINDATA    training file (default: t../europarl_50k_es_en)
   -s TESTDATA     test file (default: t../test)
 ```
-if a configuration file is used **all the other arguments will not be taken in account!**
+
+If a configuration file is used **all the other arguments will not be taken in account!**
 
 ## Soft EM
 
@@ -72,9 +74,9 @@ Once the table is initialized the EM algorithm will optimize it and find the tra
         for w in s:
             # for each word k of the target sentence
             for k in t:
-                # compute the current probability of the word w knowing k
+                # compute p(w|k)
                 p = self.__t__[w][k]
-                # accumulating the value in the counter and normalizing variable
+                # accumulating the value
                 count[w][k] += p/s_total[w]
                 total[k] += p/s_total[w]
         del s_total
@@ -94,10 +96,12 @@ At every new iteration the EM will find a better translation table and it will a
 
 The IBM Model 1 implementation for this TP is used to find the best possible alignment between two sentences such:
 
-EN : *those guidelines are presented below .*
+EN : *those guidelines are presented below .*  
 ES : *más abajo figuran dichas directrices .*
 
 To do so using the computed translation table is relatively easy as this model is a world by world translation model and where as well all the alignments of two sentences have the same probability.
+
+**As in the last TP I choose to find the reverse alignment or the probability of generate the source sentence from the translated one.**
 
 The code to do so is the following (```core.ibm1.best_alignment```):
 ```python
@@ -113,7 +117,6 @@ The code to do so is the following (```core.ibm1.best_alignment```):
         prob = -1
         # for each word of the target sentence
         for j in range(0, len(t)):
-            # if probability of translation of the couple of word is higher of the selected
             if self.t(f[i], e[j]) > prob:
                 # select new alignment
                 sel = j
@@ -146,6 +149,20 @@ Performances of the inverse translation with different sizes of the training dat
 |Spanish → English|10000|          5|    0.499| 0.446|   0.470|  67s|
 |Spanish → English| 5000|          5|    0.468| 0.418|   0.442|  33s|
 |Spanish → English| 1000|          5|    0.373| 0.334|   0.352|   8s|
+
+It's interesting to see that the same cuple of sentences doesn't have the same aligment if translating from ES → EN or EN → ES:
+
+**EN**: those guidelines are presented below .  
+**ES**: más abajo figuran dichas directrices .
+
+**EN → ES**: 3-0 4-1 2-2 0-3 0-4 5-5  
+**ES → EN**: 0-0 5-1 2-2 0-3 1-4 5-5
+
+(those, dichas) (guidelines, directrices) (are, figuran) **(presented, más)** **(below, más)** (.,.)  
+**(más,those)** **(abajo,.)** (figuran,are) (dichas,those) (directrices, guidelines) (.,.)
+
+This is due the fact that the IBM Model 1 is not simmettric as it aligns exactly one source word to each target word, so in one direction the word *abajo* is never used as the translation of *.* is only *.* and simiarly *más* appear twice in the EN → ES translation. (NB: the alignment is reversed as explained in the section IBM1)
+ 
 
 Performances with diffrent number of EM Iterations:
 
@@ -181,5 +198,5 @@ and there are no big improvments after that.
 
 Finally the translations ordered by its probabilites can be found at ```test/mytranslations```.
 
-[em_plot]: plots/plot_em_nit.png
-[ts_plot]: plots/plot_training.png
+[em_plot]: plots/plot_em_nit_hdpi.png
+[ts_plot]: plots/plot_training_hdpi.png

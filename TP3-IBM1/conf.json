@@ -1,16 +1,16 @@
 {
   "training" : {
-    "sourcefile" : "training/europarl_50k_es_en.en",
-    "targetfile" : "training/europarl_50k_es_en.es",
+    "sourcefile" : "training/europarl_50k_es_en.es",
+    "targetfile" : "training/europarl_50k_es_en.en",
     "nsentences" : 10000,
-    "translationfile" : "resources/tt_es_en_10000.json",
+    "translationfile" : "resources/tt_en_es_10000.json",
     "em_maxiters" : 4,
     "em_epsilon" : 0.0001
   },
    "testing": {
-       "sourcefile" : "test/test.en",
-       "targetfile" : "test/test.es",
-       "goldfile" : "test/test.align",
+       "sourcefile" : "test/test.es",
+       "targetfile" : "test/test.en",
+       "goldfile" : "test/test.align.es",
        "alignsfile" : "test/myalignments",
        "translationsfile" : "test/mytranslations",
        "probsfile" : "test/myprobs"

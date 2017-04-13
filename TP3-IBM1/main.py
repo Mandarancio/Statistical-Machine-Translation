@@ -73,7 +73,7 @@ def score(config, test_results):
             for g in gold:
                 s = int(g.split('-')[1])
                 t = int(g.split('-')[0])
-                if guess[s] == t:
+                if s < len(guess) and guess[s] == t:
                     correct += 1
         precision = correct / guessed
         recall = correct / total
@@ -165,10 +165,10 @@ if __name__ == "__main__":
         tt = train(conf)
         co = time.time() - co
         print("Time to train {}s".format(co))
-        output = config['training']['translationfile']
+        output = conf['training']['translationfile']
         print("Saving translation_table to {}".format(output))
         with open(output, 'w') as f:
-            json.dump(teta, f)
+            json.dump(tt, f)
 
     print('Evaluating...')
     als, parallel_corpus = test(conf, tt)
